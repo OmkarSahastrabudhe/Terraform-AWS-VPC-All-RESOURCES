@@ -30,7 +30,7 @@ resource "aws_subnet" "Public_subnet" {
 resource "aws_subnet" "Private_subnet" {
   vpc_id = aws_vpc.my_vpc.id
   cidr_block = "198.16.0.128/25"
-  region = provider.aws.region
+  
   
 }
 
