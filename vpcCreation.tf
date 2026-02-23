@@ -56,6 +56,34 @@ resource "aws_default_route_table" "my_default_route_table" {
     }
 }
 
+resource "aws_route_table" "my_route_table_default" {
+    vpc_id = aws_vpc.my_vpc.id
+    route {
+        cidr_block = "0.0.0.0/0"
+        nat_gateway_id = aws_nat_gateway.my_nat_gateway.id
+    }
+}
+
+resource "aws_route_table_association" "private_subnet_association"{
+    subnet_id = aws_subnet.Private_subnet.id
+    route_table_id = aws_route_table.my_route_table_default.id
+}
+
+
+resource "aws_eip" "nat_eip" {
+  domain = "vpc"
+}
+
+resource "aws_nat_gateway" "my_nat_gateway" {
+  subnet_id = aws_subnet.Public_subnet.id
+  allocation_id = aws_eip.nat_eip.id
+
+}
+
+
+
+
+
 
 
 
